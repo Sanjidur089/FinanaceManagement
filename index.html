@@ -10,18 +10,20 @@
             --primary-hover: #4338ca;
             --success: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --background: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #1e293b;
+            --text-main: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
+            --admin-accent: #0f172a;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
 
         body {
@@ -29,540 +31,922 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
+            flex-direction: column;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-user-badge {
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        /* View Containers */
+        .view {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out forwards;
+        }
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .container {
             width: 100%;
-            max-width: 1000px;
-            margin-top: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
         }
 
-        /* Card Styles */
+        /* Component: Cards */
         .card {
             background: var(--card-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 30px;
-            margin-bottom: 25px;
             border: 1px solid var(--border);
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
         }
 
-        /* Auth Screen Styles */
-        .auth-container {
-            max-width: 400px;
-            margin: 100px auto var(--text-main);
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .auth-header h1 {
-            color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        /* Form Controls */
-        .form-group {
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
             margin-bottom: 20px;
+            color: var(--text-main);
         }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .btn:hover {
-            background-color: var(--primary-hover);
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-        }
-        .btn-danger:hover {
-            background-color: #dc2626;
-        }
-
-        .auth-toggle {
+        /* Home/Landing Page Layout */
+        .hero {
             text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: var(--text-muted);
+            padding: 80px 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .auth-toggle span {
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .hero h1 span {
             color: var(--primary);
-            cursor: pointer;
-            font-weight: 600;
         }
 
-        /* Dashboard Styles */
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logout-btn {
-            background: none;
-            border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
+        .hero p {
+            font-size: 18px;
             color: var(--text-muted);
+            margin-bottom: 35px;
+            line-height: 1.6;
         }
 
-        .logout-btn:hover {
-            background: #f1f5f9;
-            color: var(--danger);
-        }
-
-        /* Financial Summary Cards */
-        .summary-grid {
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
         }
 
-        .summary-card {
+        .feature-card {
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
+            text-align: left;
         }
 
-        .summary-card .title {
-            font-size: 14px;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 5px;
+        .feature-card .icon {
+            font-size: 32px;
+            margin-bottom: 15px;
         }
 
-        .summary-card .amount {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .balance-card { border-left: 5px solid var(--primary); }
-        .income-card { border-left: 5px solid var(--success); color: var(--success); }
-        .expense-card { border-left: 5px solid var(--danger); color: var(--danger); }
-        
-        .balance-card .amount { color: var(--text-main); }
-
-        /* Dashboard Grid Layout */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 25px;
-        }
-
-        @media (max-width: 768px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Transaction List */
-        .transaction-list {
-            list-style: none;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
+        /* Buttons & Controls */
+        .btn {
+            display: inline-flex;
             align-items: center;
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--border);
-            border-radius: 6px;
-            margin-bottom: 8px;
-            background: #fafafa;
-        }
-
-        .transaction-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .trans-details .desc {
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 15px;
-        }
-
-        .trans-details .cat {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .trans-amount-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .trans-amount {
-            font-weight: 700;
-        }
-
-        .trans-amount.income { color: var(--success); }
-        .trans-amount.expense { color: var(--danger); }
-
-        .delete-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
+            transition: all 0.2s;
+            border: none;
+            gap: 8px;
         }
 
-        .delete-btn:hover {
-            color: var(--danger);
-        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-main); }
+        .btn-secondary:hover { background: #f1f5f9; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-danger:hover { background: #dc2626; }
+        .btn-warning { background: var(--warning); color: white; }
+        .btn-warning:hover { background: #d97706; }
+        .btn-sm { padding: 6px 12px; font-size: 13px; border-radius: 6px; }
 
-        /* Helper Classes */
-        .hidden {
-            display: none !important;
-        }
+        /* Forms styling */
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+        .form-control { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; outline: none; }
+        .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
         
-        .alert {
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            text-align: center;
+        /* Auth Screen layout modification */
+        .auth-card { max-width: 450px; margin: 40px auto; }
+        .role-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+        .role-option { flex: 1; text-align: center; padding: 12px; border: 2px solid var(--border); border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .role-option.active { border-color: var(--primary); background: #f5f3ff; color: var(--primary); }
+
+        /* Personal Dashboard Framework */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+        .stat-card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 12px; }
+        .stat-card .label { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+        .stat-card .val { font-size: 26px; font-weight: 700; margin-top: 5px; }
+        
+        .workspace { display: grid; grid-template-columns: 1.2fr 1.8fr; gap: 24px; }
+        @media (max-width: 900px) {
+            .dashboard-grid, .workspace { grid-template-columns: 1fr; }
         }
-        .alert-danger { background: #fee2e2; color: var(--danger); }
-        .alert-success { background: #d1fae5; color: var(--success); }
+
+        /* Filter Controls */
+        .filter-bar { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; justify-content: space-between; }
+        .pill-box { display: flex; gap: 5px; background: #e2e8f0; padding: 4px; border-radius: 8px; }
+        .pill { padding: 6px 12px; font-size: 13px; font-weight: 600; border-radius: 6px; cursor: pointer; background: transparent; border: none; color: var(--text-muted); }
+        .pill.active { background: white; color: var(--text-main); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        /* Dynamic Progress Bar Component */
+        .progress-wrapper { margin-top: 15px; }
+        .progress-info { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+        .progress-track { background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; }
+        .progress-bar { background: var(--success); height: 100%; width: 0%; transition: width 0.4s ease; }
+
+        /* Lists & Tables */
+        .tx-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid var(--border); }
+        .tx-item:last-child { border-bottom: none; }
+        .tx-info .title { font-weight: 600; font-size: 15px; }
+        .tx-info .meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        .tx-amount { font-weight: 700; }
+        .tx-amount.income { color: var(--success); }
+        .tx-amount.expense { color: var(--danger); }
+
+        /* Visual CSS Mini Analytics Engine */
+        .chart-container { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .chart-row { display: flex; align-items: center; gap: 10px; }
+        .chart-label { width: 80px; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .chart-track { flex-grow: 1; background: #f1f5f9; height: 16px; border-radius: 4px; overflow: hidden; position: relative; }
+        .chart-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.5s ease; border-radius: 4px; }
+        .chart-val { font-size: 13px; font-weight: 600; color: var(--text-muted); width: 60px; text-align: right; }
+
+        /* Admin Layout Structure */
+        .admin-table-wrapper { overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+        .admin-table th { background: #f1f5f9; padding: 12px; font-weight: 600; border-bottom: 2px solid var(--border); }
+        .admin-table td { padding: 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        
+        /* Helpers */
+        .hidden { display: none !important; }
+        .alert { padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 500; margin-bottom: 15px; text-align: center; }
+        .alert-danger { background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; }
+        .alert-success { background: #d1fae5; color: var(--success); border: 1px solid #6ee7b7; }
     </style>
 </head>
 <body>
 
+    <nav class="navbar">
+        <div class="nav-logo" onclick="routeTo('homeView')">🌐 SmartFinance</div>
+        <div class="nav-links" id="navLinks">
+            <button class="btn btn-secondary btn-sm" onclick="routeTo('homeView')">Home</button>
+            <button class="btn btn-primary btn-sm" id="navAuthBtn" onclick="routeTo('authView')">Get Started</button>
+            <div id="navUserArea" class="hidden" style="display: flex; align-items: center; gap: 15px;">
+                <span id="userRoleBadge" class="nav-user-badge">User</span>
+                <button class="btn btn-secondary btn-sm" onclick="logout()">Log Out</button>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
-        
-        <div id="authView" class="card auth-container">
-            <div class="auth-header">
-                <h1 id="authTitle">Smart Finance</h1>
-                <p id="authSubtitle" style="color: var(--text-muted);">Sign in to manage your budget</p>
+
+        <div id="homeView" class="view active">
+            <div class="hero">
+                <h1>Take Ultimate Control of Your <span>Financial Destiny</span></h1>
+                <p>The centralized hub engineered for modern asset tracking. Run your household ledgers, structure optimization pipelines, or manage multi-tenant environments dynamically using local storage architectures.</p>
+                <div style="display: flex; gap: 15px; justify-content: center;">
+                    <button class="btn btn-primary" onclick="openAuth('personal')">Access Personal Account</button>
+                    <button class="btn btn-secondary" onclick="openAuth('admin')">Enterprise Console</button>
+                </div>
             </div>
             
-            <div id="authAlert" class="alert hidden"></div>
-
-            <form id="authForm" onsubmit="handleAuth(event)">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" required placeholder="Enter username">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">💼</div>
+                    <h3>Personal Accounts</h3>
+                    <p>Track cash flow, run budget thresholds against analytics engines, and accurately scale targeted savings milestones.</p>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" required placeholder="Enter password">
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Administrative Control</h3>
+                    <p>Audit multi-account system setups, manipulate environment variables, scrub database tables, and run diagnostic platform checks.</p>
                 </div>
-                <button type="submit" id="authSubmitBtn" class="btn">Log In</button>
-            </form>
-
-            <div class="auth-toggle">
-                <span id="toggleText" onclick="toggleAuthMode()">Don't have an account? Register</span>
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h3>Zero External Dependencies</h3>
+                    <p>Runs natively without external requests, maintaining local records inside sandboxed, client-controlled browser architectures.</p>
+                </div>
             </div>
         </div>
 
-        <div id="dashboardView" class="hidden">
-            
-            <div class="dashboard-header">
-                <div>
-                    <h2>Smart Finance Management System</h2>
-                </div>
-                <div class="user-info">
-                    <span id="welcomeMessage">Welcome, User</span>
-                    <button class="logout-btn" onclick="logout()">Log Out</button>
-                </div>
-            </div>
-
-            <div class="summary-grid">
-                <div class="summary-card balance-card">
-                    <span class="title">Net Balance</span>
-                    <span class="amount" id="totalBalance">$0.00</span>
-                </div>
-                <div class="summary-card income-card">
-                    <span class="title">Total Income</span>
-                    <span class="amount" id="totalIncome">+$0.00</span>
-                </div>
-                <div class="summary-card expense-card">
-                    <span class="title">Total Expenses</span>
-                    <span class="amount" id="totalExpense">-$0.00</span>
-                </div>
-            </div>
-
-            <div class="main-grid">
+        <div id="authView" class="view">
+            <div class="card auth-card">
+                <h2 id="authHeadline" style="text-align: center; margin-bottom: 10px;">Access Platform</h2>
+                <p id="authSubheadline" style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">Select configuration layer and supply keys</p>
                 
-                <div class="card">
-                    <h3 style="margin-bottom: 20px;">Add New Transaction</h3>
-                    <form id="transactionForm" onsubmit="addTransaction(event)">
-                        <div class="form-group">
-                            <label for="transDesc">Description</label>
-                            <input type="text" id="transDesc" class="form-control" placeholder="e.g., Grocery, Salary" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="transAmount">Amount ($)</label>
-                            <input type="number" step="0.01" id="transAmount" class="form-control" placeholder="0.00" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="transType">Type</label>
-                            <select id="transType" class="form-control" required>
-                                <option value="income">Income</option>
-                                <option value="expense">Expense</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="transCat">Category</label>
-                            <input type="text" id="transCat" class="form-control" placeholder="e.g., Food, Utilities, Leisure">
-                        </div>
-                        <button type="submit" class="btn">Add Transaction</button>
-                    </form>
+                <div id="authAlert" class="alert hidden"></div>
+
+                <div class="role-selector">
+                    <div id="rolePersonal" class="role-option active" onclick="setAuthRole('personal')">Personal Node</div>
+                    <div id="roleAdmin" class="role-option" onclick="setAuthRole('admin')">Admin Layer</div>
                 </div>
 
-                <div class="card">
-                    <h3 style="margin-bottom: 20px;">Transaction History</h3>
-                    <ul id="transactionList" class="transaction-list">
-                        </ul>
+                <form id="authForm" onsubmit="executeAuthentication(event)">
+                    <div class="form-group">
+                        <label for="authUsername">Account Identifier</label>
+                        <input type="text" id="authUsername" class="form-control" placeholder="Enter alphanumeric string" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="authPassword">Access Key Phrase</label>
+                        <input type="password" id="authPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" id="authSubmitButton" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Initialize Session</button>
+                </form>
+                <div style="text-align: center; margin-top: 20px; font-size: 14px; color: var(--text-muted);">
+                    <span id="authToggleMessage">Need a private workspace?</span> 
+                    <span id="authToggleAction" style="color: var(--primary); cursor: pointer; font-weight: 600;" onclick="toggleAuthIntent()">Create Profile</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="personalDashboardView" class="view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <div>
+                    <h2 id="personalDashboardTitle">Personal Ledger</h2>
+                    <p style="color: var(--text-muted); font-size: 14px;">Dynamic transaction streaming and analytics engine</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="stat-card" style="border-left: 4px solid var(--primary);">
+                    <div class="label">Net Liquidity</div>
+                    <div class="val" id="lblNetLiquidity">$0.00</div>
+                </div>
+                <div class="stat-card" style="border-left: 4px solid var(--success);">
+                    <div class="label">Total Inflow Volume</div>
+                    <div class="val" id="lblInflow" style="color: var(--success);">$0.00</div>
+                </div>
+                <div class="stat-card" style="border-left: 4px solid var(--danger);">
+                    <div class="label">Total Outflow Volume</div>
+                    <div class="val" id="lblOutflow" style="color: var(--danger);">$0.00</div>
+                </div>
+            </div>
+
+            <div class="workspace">
+                <div>
+                    <div class="card">
+                        <div class="card-title">Append Transaction Log</div>
+                        <form id="txForm" onsubmit="appendTransaction(event)">
+                            <div class="form-group">
+                                <label for="txDesc">Log Description</label>
+                                <input type="text" id="txDesc" class="form-control" placeholder="e.g., Cloud Server Stack, Salary Invoice" required>
+                            </div>
+                            <div class="form-row" style="display: flex; gap: 12px;">
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="txAmount">Quantum Value ($)</label>
+                                    <input type="number" step="0.01" id="txAmount" class="form-control" placeholder="0.00" required>
+                                </div>
+                                <div class="form-group" style="flex: 1;">
+                                    <label for="txType">Allocation Matrix</label>
+                                    <select id="txType" class="form-control" required>
+                                        <option value="income">Inflow (Income)</option>
+                                        <option value="expense">Outflow (Expense)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txCategory">Functional Category</label>
+                                <select id="txCategory" class="form-control">
+                                    <option value="Capital Outlay">Capital Outlay</option>
+                                    <option value="Operational Cost">Operational Cost</option>
+                                    <option value="Personnel Resource">Personnel Resource</option>
+                                    <option value="Revenue Yield">Revenue Yield</option>
+                                    <option value="Discretionary Spend">Discretionary Spend</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Commit Entry to State</button>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Target Milestone Allocation</div>
+                        <form id="savingsForm" onsubmit="updateSavingsGoal(event)">
+                            <div class="form-row" style="display: flex; gap: 12px; margin-bottom: 12px;">
+                                <div class="form-group" style="flex: 1; margin: 0;">
+                                    <label for="goalTarget">Target Cap ($)</label>
+                                    <input type="number" id="goalTarget" class="form-control" placeholder="50000" required>
+                                </div>
+                                <div class="form-group" style="flex: 1; margin: 0;">
+                                    <label for="goalCurrent">Current Locked ($)</label>
+                                    <input type="number" id="goalCurrent" class="form-control" placeholder="12500" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-secondary btn-sm" style="width: 100%;">Recalculate Progression Map</button>
+                        </form>
+                        <div class="progress-wrapper">
+                            <div class="progress-info">
+                                <span style="font-weight: 600;">Progression Index</span>
+                                <span id="lblGoalPct" style="font-weight: 700; color: var(--primary);">0%</span>
+                            </div>
+                            <div class="progress-track"><div id="barGoal" class="progress-bar"></div></div>
+                        </div>
+                    </div>
                 </div>
 
+                <div>
+                    <div class="card">
+                        <div class="filter-bar">
+                            <div class="card-title" style="margin: 0;">Transaction Streaming Logs</div>
+                            <div class="pill-box">
+                                <button class="pill active" id="filterAll" onclick="applyTxFilter('all')">All</button>
+                                <button class="pill" id="filterIncome" onclick="applyTxFilter('income')">Inflow</button>
+                                <button class="pill" id="filterExpense" onclick="applyTxFilter('expense')">Outflow</button>
+                            </div>
+                        </div>
+                        <div id="txStreamContainer" style="max-height: 320px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px;">
+                            </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Dynamic Category Weight Matrix</div>
+                        <div id="chartEngineWrapper" class="chart-container">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminDashboardView" class="view">
+            <div style="margin-bottom: 25px;">
+                <h2>Platform Governance Engine</h2>
+                <p style="color: var(--text-muted); font-size: 14px;">Master multi-tenant orchestration, global table evaluation, and system reset arrays</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="stat-card" style="border-top: 4px solid var(--admin-accent);">
+                    <div class="label">Registered Node IDs</div>
+                    <div class="val" id="adminTotalUsers">0</div>
+                </div>
+                <div class="stat-card" style="border-top: 4px solid var(--admin-accent);">
+                    <div class="label">Aggregated Core State Entries</div>
+                    <div class="val" id="adminTotalTransactions">0</div>
+                </div>
+                <div class="stat-card" style="border-top: 4px solid var(--admin-accent);">
+                    <div class="label">Gross Transacted Platform Volume</div>
+                    <div class="val" id="adminGlobalVolume">$0.00</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div class="card-title" style="margin: 0;">Account Node Registry</div>
+                    <button class="btn btn-danger btn-sm" onclick="purgePlatformDatastore()">Full Cluster Purge</button>
+                </div>
+                <div class="admin-table-wrapper">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Node Identifier</th>
+                                <th>Classification Layer</th>
+                                <th>Committed Log Count</th>
+                                <th>Evaluated Valuation</th>
+                                <th style="text-align: right;">Administrative Override Execution</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUserTableBody">
+                            </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // --- Application State ---
-        let isLoginMode = true;
-        let currentUser = null;
+        // --- Core Orchestration Configuration State ---
+        let currentView = 'homeView';
+        let currentRoleCtx = 'personal'; // personal | admin
+        let isAuthRegistrationIntent = false;
+        let authenticatedUser = null;
+        let activeTxFilter = 'all';
 
-        // Load users data registry from localStorage or instantiate if empty
-        let usersDatabase = JSON.parse(localStorage.getItem('finance_users')) || {};
+        // Core system dynamic database payload mapping layer
+        let platformDatastore = {};
 
-        // DOM Initializations
+        // Default Admin credentials configuration baseline
+        const SEED_ADMIN_ID = "admin";
+        const SEED_ADMIN_KEY = "admin123";
+
+        // Initialization Pipeline
         document.addEventListener("DOMContentLoaded", () => {
-            // Check if user session exists from a previous layout session
-            const savedSession = localStorage.getItem('finance_current_user');
-            if (savedSession && usersDatabase[savedSession]) {
-                currentUser = savedSession;
-                showDashboard();
-            }
+            initializePlatformDatastore();
+            evaluatePersistentSession();
         });
 
-        // --- Authentication View Actions ---
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('authTitle');
-            const subtitle = document.getElementById('authSubtitle');
-            const submitBtn = document.getElementById('authSubmitBtn');
-            const toggleText = document.getElementById('toggleText');
-            const alertBox = document.getElementById('authAlert');
+        function initializePlatformDatastore() {
+            const rawStore = localStorage.getItem('smart_finance_db');
+            if (rawStore) {
+                platformDatastore = JSON.parse(rawStore);
+            } else {
+                // Initialize clean database structure with master seed account
+                platformDatastore = {};
+                platformDatastore[SEED_ADMIN_ID] = {
+                    key: SEED_ADMIN_KEY,
+                    role: 'admin',
+                    logs: [],
+                    milestone: { target: 0, current: 0 }
+                };
+                commitStateToLocalStorage();
+            }
+        }
+
+        function commitStateToLocalStorage() {
+            localStorage.setItem('smart_finance_db', JSON.stringify(platformDatastore));
+        }
+
+        function evaluatePersistentSession() {
+            const preservedUser = localStorage.getItem('smart_finance_session_id');
+            if (preservedUser && platformDatastore[preservedUser]) {
+                authenticatedUser = preservedUser;
+                setupUIForAuthenticatedSession();
+                if (platformDatastore[authenticatedUser].role === 'admin') {
+                    routeTo('adminDashboardView');
+                } else {
+                    routeTo('personalDashboardView');
+                }
+            } else {
+                routeTo('homeView');
+            }
+        }
+
+        // --- Application Router Framework ---
+        function routeTo(viewId) {
+            currentView = viewId;
+            document.querySelectorAll('.view').forEach(element => {
+                element.classList.remove('active');
+            });
+            const targetedView = document.getElementById(viewId);
+            if (targetedView) targetedView.classList.add('active');
             
-            alertBox.classList.add('hidden');
-            document.getElementById('authForm').reset();
+            // Execute automated UI component pipeline triggers depending on view context
+            if (viewId === 'personalDashboardView') renderPersonalLedgerSpace();
+            if (viewId === 'adminDashboardView') renderAdminWorkspace();
+        }
 
-            if (isLoginMode) {
-                title.innerText = "Smart Finance";
-                subtitle.innerText = "Sign in to manage your budget";
-                submitBtn.innerText = "Log In";
-                toggleText.innerText = "Don't have an account? Register";
+        function openAuth(preferredRole) {
+            setAuthRole(preferredRole);
+            isAuthRegistrationIntent = false;
+            syncAuthFormLabels();
+            routeTo('authView');
+        }
+
+        // --- Authentication Engine Handlers ---
+        function setAuthRole(role) {
+            currentRoleCtx = role;
+            const pBadge = document.getElementById('rolePersonal');
+            const aBadge = document.getElementById('roleAdmin');
+            const toggleWrapper = document.getElementById('authToggleMessage').parentElement;
+
+            if (role === 'admin') {
+                aBadge.classList.add('active');
+                pBadge.classList.remove('active');
+                toggleWrapper.classList.add('hidden'); // Disable registration operations for administration role
+                isAuthRegistrationIntent = false;
             } else {
-                title.innerText = "Create Account";
-                subtitle.innerText = "Join to track your micro-economy";
-                submitBtn.innerText = "Register";
-                toggleText.innerText = "Already have an account? Log In";
+                pBadge.classList.add('active');
+                aBadge.classList.remove('active');
+                toggleWrapper.classList.remove('hidden');
+            }
+            syncAuthFormLabels();
+        }
+
+        function toggleAuthIntent() {
+            isAuthRegistrationIntent = !isAuthRegistrationIntent;
+            syncAuthFormLabels();
+        }
+
+        function syncAuthFormLabels() {
+            const headline = document.getElementById('authHeadline');
+            const subheadline = document.getElementById('authSubheadline');
+            const submitBtn = document.getElementById('authSubmitButton');
+            const toggleAct = document.getElementById('authToggleAction');
+            const toggleMsg = document.getElementById('authToggleMessage');
+            
+            // Reset fields
+            document.getElementById('authAlert').classList.add('hidden');
+
+            if (currentRoleCtx === 'admin') {
+                headline.innerText = "Administrative Command Layer";
+                subheadline.innerText = "Supply authorized global system credentials";
+                submitBtn.innerText = "Authenticate Master Node";
+            } else {
+                if (isAuthRegistrationIntent) {
+                    headline.innerText = "Register Personal Node";
+                    subheadline.innerText = "Establish a private storage space inside client configuration layers";
+                    submitBtn.innerText = "Provision Node Profile";
+                    toggleMsg.innerText = "Already possess clearance?";
+                    toggleAct.innerText = "Log In";
+                } else {
+                    headline.innerText = "Access Personal Ledger";
+                    subheadline.innerText = "Provide cryptographic parameters to map data frames";
+                    submitBtn.innerText = "Initialize Node Session";
+                    toggleMsg.innerText = "Need a private workspace?";
+                    toggleAct.innerText = "Create Profile";
+                }
             }
         }
 
-        function handleAuth(e) {
+        function executeAuthentication(e) {
             e.preventDefault();
-            const userField = document.getElementById('username').value.trim();
-            const passField = document.getElementById('password').value;
+            const uid = document.getElementById('authUsername').value.trim();
+            const key = document.getElementById('authPassword').value;
             const alertBox = document.getElementById('authAlert');
 
-            if (!userField || !passField) return;
+            if (!uid || !key) return;
 
-            if (isLoginMode) {
-                // Login Processing Logic
-                if (usersDatabase[userField] && usersDatabase[userField].password === passField) {
-                    currentUser = userField;
-                    localStorage.setItem('finance_current_user', currentUser);
-                    showAlert(alertBox, "Login successful!", "success");
-                    setTimeout(showDashboard, 800);
+            if (currentRoleCtx === 'admin') {
+                // Admin evaluation vector
+                if (platformDatastore[uid] && platformDatastore[uid].role === 'admin' && platformDatastore[uid].key === key) {
+                    executeSuccessfulLogin(uid);
                 } else {
-                    showAlert(alertBox, "Invalid username or password.", "danger");
+                    displayAlert(alertBox, "Administrative key mismatch or invalid identifier security parameters.", "danger");
                 }
             } else {
-                // Registration Processing Logic
-                if (usersDatabase[userField]) {
-                    showAlert(alertBox, "Username already exists.", "danger");
+                // Personal role profile vector
+                if (isAuthRegistrationIntent) {
+                    if (platformDatastore[uid]) {
+                        displayAlert(alertBox, "Identifier profile collision detected. Select another parameter string.", "danger");
+                    } else {
+                        platformDatastore[uid] = {
+                            key: key,
+                            role: 'personal',
+                            logs: [],
+                            milestone: { target: 0, current: 0 }
+                        };
+                        commitStateToLocalStorage();
+                        displayAlert(alertBox, "Workspace provisioned successfully. Proceeding to initialize environment.", "success");
+                        isAuthRegistrationIntent = false;
+                        setTimeout(() => { executeSuccessfulLogin(uid); }, 800);
+                    }
                 } else {
-                    usersDatabase[userField] = {
-                        password: passField,
-                        transactions: []
-                    };
-                    saveDatabase();
-                    showAlert(alertBox, "Registration successful! You can now log in.", "success");
-                    toggleAuthMode();
+                    if (platformDatastore[uid] && platformDatastore[uid].role === 'personal' && platformDatastore[uid].key === key) {
+                        executeSuccessfulLogin(uid);
+                    } else {
+                        displayAlert(alertBox, "Profile validation failure. Check structural credentials.", "danger");
+                    }
                 }
             }
         }
 
-        function showAlert(element, message, type) {
-            element.innerText = message;
-            element.className = `alert alert-${type}`;
+        function executeSuccessfulLogin(uid) {
+            authenticatedUser = uid;
+            localStorage.setItem('smart_finance_session_id', uid);
+            document.getElementById('authForm').reset();
+            setupUIForAuthenticatedSession();
+            
+            if (platformDatastore[uid].role === 'admin') {
+                routeTo('adminDashboardView');
+            } else {
+                routeTo('personalDashboardView');
+            }
         }
 
-        function saveDatabase() {
-            localStorage.setItem('finance_users', JSON.stringify(usersDatabase));
-        }
-
-        // --- Dashboard System Logic ---
-        function showDashboard() {
-            document.getElementById('authView').classList.add('hidden');
-            document.getElementById('dashboardView').classList.remove('hidden');
-            document.getElementById('welcomeMessage').innerText = `Welcome, ${currentUser}`;
-            updateUI();
+        function setupUIForAuthenticatedSession() {
+            document.getElementById('navAuthBtn').classList.add('hidden');
+            const userArea = document.getElementById('navUserArea');
+            userArea.classList.remove('hidden');
+            
+            const badge = document.getElementById('userRoleBadge');
+            badge.innerText = `${authenticatedUser} (${platformDatastore[authenticatedUser].role})`;
+            if (platformDatastore[authenticatedUser].role === 'admin') {
+                badge.style.background = '#0f172a';
+                badge.style.color = '#ffffff';
+            } else {
+                badge.style.background = '#e0e7ff';
+                badge.style.color = '#4f46e5';
+            }
         }
 
         function logout() {
-            currentUser = null;
-            localStorage.removeItem('finance_current_user');
-            document.getElementById('authForm').reset();
-            document.getElementById('authView').classList.remove('hidden');
-            document.getElementById('dashboardView').classList.add('hidden');
-            toggleAuthMode();
-            isLoginMode = true;
+            authenticatedUser = null;
+            localStorage.removeItem('smart_finance_session_id');
+            document.getElementById('navUserArea').classList.add('hidden');
+            document.getElementById('navAuthBtn').classList.remove('hidden');
+            routeTo('homeView');
         }
 
-        function updateUI() {
-            const transactions = usersDatabase[currentUser].transactions || [];
-            const listElement = document.getElementById('transactionList');
+        function displayAlert(element, message, configurationClass) {
+            element.innerText = message;
+            element.className = `alert alert-${configurationClass}`;
+        }
+
+        // --- Personal Ledger Operations & Calculation Engine ---
+        function renderPersonalLedgerSpace() {
+            document.getElementById('personalDashboardTitle').innerText = `${authenticatedUser}'s Portfolio Ledger`;
+            const profile = platformDatastore[authenticatedUser];
             
-            // Core Metrics counters
-            let totalIncome = 0;
-            let totalExpense = 0;
+            // Build calculations values metrics
+            let aggregateInflow = 0;
+            let aggregateOutflow = 0;
+            let categoryWeights = {};
 
-            listElement.innerHTML = '';
-
-            if(transactions.length === 0) {
-                listElement.innerHTML = `<li style="text-align:center; color:var(--text-muted); padding:20px;">No transaction records found.</li>`;
-            }
-
-            // Loop in reverse chronologically to show fresh entries at the top
-            transactions.forEach((tx, index) => {
-                const amount = parseFloat(tx.amount);
-                if (tx.type === 'income') {
-                    totalIncome += amount;
+            const logArray = profile.logs || [];
+            
+            logArray.forEach(log => {
+                const val = parseFloat(log.amount);
+                if (log.type === 'income') {
+                    aggregateInflow += val;
                 } else {
-                    totalExpense += amount;
+                    aggregateOutflow += val;
+                    // Compute operational weight allocations
+                    categoryWeights[log.category] = (categoryWeights[log.category] || 0) + val;
                 }
-
-                const li = document.createElement('li');
-                li.className = 'transaction-item';
-                li.innerHTML = `
-                    <div class="trans-details">
-                        <div class="desc">${escapeHtml(tx.description)}</div>
-                        <div class="cat">${escapeHtml(tx.category || 'General')}</div>
-                    </div>
-                    <div class="trans-amount-wrapper">
-                        <span class="trans-amount ${tx.type}">
-                            ${tx.type === 'income' ? '+' : '-'}$${amount.toFixed(2)}
-                        </span>
-                        <button class="delete-btn" onclick="deleteTransaction(${index})">&times;</button>
-                    </div>
-                `;
-                listElement.appendChild(li);
             });
 
-            const netBalance = totalIncome - totalExpense;
+            const netLiquidity = aggregateInflow - aggregateOutflow;
 
-            // Render calculation modules UI
-            document.getElementById('totalBalance').innerText = `${netBalance < 0 ? '-' : ''}$${Math.abs(netBalance).toFixed(2)}`;
-            document.getElementById('totalIncome').innerText = `+$${totalIncome.toFixed(2)}`;
-            document.getElementById('totalExpense').innerText = `-$${totalExpense.toFixed(2)}`;
+            // Update user view data nodes
+            document.getElementById('lblNetLiquidity').innerText = `${netLiquidity < 0 ? '-' : ''}$${Math.abs(netLiquidity).toFixed(2)}`;
+            document.getElementById('lblInflow').innerText = `+$${aggregateInflow.toFixed(2)}`;
+            document.getElementById('lblOutflow').innerText = `-$${aggregateOutflow.toFixed(2)}`;
+
+            // Build out milestone progress calculations mechanics
+            const target = parseFloat(profile.milestone?.target || 0);
+            const current = parseFloat(profile.milestone?.current || 0);
+            document.getElementById('goalTarget').value = target || '';
+            document.getElementById('goalCurrent').value = current || '';
+            
+            let percentage = 0;
+            if (target > 0) {
+                percentage = Math.min(100, Math.round((current / target) * 100));
+            }
+            document.getElementById('lblGoalPct').innerText = `${percentage}%`;
+            document.getElementById('barGoal').style.width = `${percentage}%`;
+
+            // Compile Transaction Stream Output Dom
+            renderTransactionStream(logArray);
+
+            // Compile Category Graphic Engine Data Frame Outputs
+            renderCategoryMatrixCharts(categoryWeights, aggregateOutflow);
         }
 
-        function addTransaction(e) {
-            e.preventDefault();
-            
-            const desc = document.getElementById('transDesc').value.trim();
-            const amount = parseFloat(document.getElementById('transAmount').value);
-            const type = document.getElementById('transType').value;
-            const category = document.getElementById('transCat').value.trim();
+        function renderTransactionStream(logs) {
+            const streamBox = document.getElementById('txStreamContainer');
+            streamBox.innerHTML = '';
 
-            const newTransaction = {
+            let isolatedSubset = logs;
+            if (activeTxFilter !== 'all') {
+                isolatedSubset = logs.filter(l => l.type === activeTxFilter);
+            }
+
+            if (isolatedSubset.length === 0) {
+                streamBox.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted); font-size:14px;">No ledger items mapped under filter context.</div>`;
+                return;
+            }
+
+            isolatedSubset.forEach(log => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'tx-item';
+                wrapper.innerHTML = `
+                    <div class="tx-info">
+                        <div class="title">${escapeStringHtml(log.description)}</div>
+                        <div class="meta">📂 ${escapeStringHtml(log.category)} | 🕒 ${new Date(log.id).toLocaleDateString()}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span class="tx-amount ${log.type}">
+                            ${log.type === 'income' ? '+' : '-'}$${parseFloat(log.amount).toFixed(2)}
+                        </span>
+                        <button class="btn btn-secondary btn-sm" style="padding: 2px 6px; color: var(--danger);" onclick="deleteTransaction(${log.id})">&times;</button>
+                    </div>
+                `;
+                streamBox.appendChild(wrapper);
+            });
+        }
+
+        function renderCategoryMatrixCharts(weights, totalOutflow) {
+            const chartBox = document.getElementById('chartEngineWrapper');
+            chartBox.innerHTML = '';
+
+            const categories = Object.keys(weights);
+            if (categories.length === 0 || totalOutflow === 0) {
+                chartBox.innerHTML = `<div style="text-align:center; color:var(--text-muted); padding:10px; font-size:13px;">No relative dynamic outflow data available.</div>`;
+                return;
+            }
+
+            categories.forEach(cat => {
+                const amount = weights[cat];
+                const weightPct = Math.round((amount / totalOutflow) * 100);
+                
+                const row = document.createElement('div');
+                row.className = 'chart-row';
+                row.innerHTML = `
+                    <div class="chart-label" title="${escapeStringHtml(cat)}">${escapeStringHtml(cat)}</div>
+                    <div class="chart-track">
+                        <div class="chart-bar" style="width: ${weightPct}%;"></div>
+                    </div>
+                    <div class="chart-val">$${amount.toFixed(0)} (${weightPct}%)</div>
+                `;
+                chartBox.appendChild(row);
+            });
+        }
+
+        function appendTransaction(e) {
+            e.preventDefault();
+            const desc = document.getElementById('txDesc').value.trim();
+            const amount = parseFloat(document.getElementById('txAmount').value);
+            const type = document.getElementById('txType').value;
+            const category = document.getElementById('txCategory').value;
+
+            if (!desc || isNaN(amount) || amount <= 0) return;
+
+            const logEntry = {
+                id: Date.now(),
                 description: desc,
                 amount: amount,
                 type: type,
-                category: category || 'General',
-                timestamp: new Date().getTime()
+                category: category
             };
 
-            usersDatabase[currentUser].transactions.unshift(newTransaction);
-            saveDatabase();
-            updateUI();
+            platformDatastore[authenticatedUser].logs.unshift(logEntry);
+            commitStateToLocalStorage();
+            renderPersonalLedgerSpace();
+            document.getElementById('txForm').reset();
+        }
+
+        function deleteTransaction(logId) {
+            const profileLogs = platformDatastore[authenticatedUser].logs;
+            platformDatastore[authenticatedUser].logs = profileLogs.filter(l => l.id !== logId);
+            commitStateToLocalStorage();
+            renderPersonalLedgerSpace();
+        }
+
+        function applyTxFilter(filterContext) {
+            activeTxFilter = filterContext;
+            document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+            if (filterContext === 'all') document.getElementById('filterAll').classList.add('active');
+            if (filterContext === 'income') document.getElementById('filterIncome').classList.add('active');
+            if (filterContext === 'expense') document.getElementById('filterExpense').classList.add('active');
             
-            document.getElementById('transactionForm').reset();
+            renderTransactionStream(platformDatastore[authenticatedUser].logs);
         }
 
-        function deleteTransaction(index) {
-            usersDatabase[currentUser].transactions.splice(index, 1);
-            saveDatabase();
-            updateUI();
+        function updateSavingsGoal(e) {
+            e.preventDefault();
+            const target = parseFloat(document.getElementById('goalTarget').value) || 0;
+            const current = parseFloat(document.getElementById('goalCurrent').value) || 0;
+
+            platformDatastore[authenticatedUser].milestone = { target, current };
+            commitStateToLocalStorage();
+            renderPersonalLedgerSpace();
         }
 
-        // XSS defense utility to escape HTML input injections safely
-        function escapeHtml(text) {
-            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
-            return text.replace(/[&<>"']/g, m => map[m]);
+        // --- Administrative Governance Functions ---
+        function renderAdminWorkspace() {
+            const users = Object.keys(platformDatastore);
+            
+            let totalTransactionsCount = 0;
+            let grossPlatformVolume = 0;
+            let consumerUserCount = 0;
+
+            const tableBody = document.getElementById('adminUserTableBody');
+            tableBody.innerHTML = '';
+
+            users.forEach(username => {
+                const node = platformDatastore[username];
+                const totalLogs = node.logs?.length || 0;
+                
+                let balanceValue = 0;
+                node.logs?.forEach(l => {
+                    const amt = parseFloat(l.amount || 0);
+                    grossPlatformVolume += amt;
+                    if (l.type === 'income') balanceValue += amt;
+                    else balanceValue -= amt;
+                });
+
+                if (node.role !== 'admin') {
+                    consumerUserCount++;
+                }
+                totalTransactionsCount += totalLogs;
+
+                // Build Table Row Layout Component
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="font-weight:600;">${escapeStringHtml(username)}</td>
+                    <td><span class="nav-user-badge" style="${node.role === 'admin' ? 'background:#0f172a; color:#fff;' : ''}">${node.role}</span></td>
+                    <td>${totalLogs} logs</td>
+                    <td style="font-weight:700; color:${balanceValue < 0 ? 'var(--danger)' : 'var(--text-main)'}">
+                        ${balanceValue < 0 ? '-' : ''}$${Math.abs(balanceValue).toFixed(2)}
+                    </td>
+                    <td style="text-align: right;">
+                        ${username === SEED_ADMIN_ID ? 
+                            `<span style="color:var(--text-muted); font-size:12px; font-style:italic;">Protected Master Root Node</span>` : 
+                            `<button class="btn btn-secondary btn-sm" style="color:var(--warning); margin-right:5px;" onclick="wipeUserLedgerData('${username}')">Scrub Data</button>
+                             <button class="btn btn-danger btn-sm" onclick="decommissionUserNode('${username}')">Deprovision</button>`
+                        }
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            document.getElementById('adminTotalUsers').innerText = consumerUserCount;
+            document.getElementById('adminTotalTransactions').innerText = totalTransactionsCount;
+            document.getElementById('adminGlobalVolume').innerText = `$${grossPlatformVolume.toFixed(2)}`;
+        }
+
+        function wipeUserLedgerData(username) {
+            if (confirm(`Execute memory clear sequence on Node [${username}]? Financial registers will drop to zero.`)) {
+                platformDatastore[username].logs = [];
+                platformDatastore[username].milestone = { target: 0, current: 0 };
+                commitStateToLocalStorage();
+                renderAdminWorkspace();
+            }
+        }
+
+        function decommissionUserNode(username) {
+            if (confirm(`Irreversibly deprovision user entry registry for Node [${username}]? Complete data structures will be expunged.`)) {
+                delete platformDatastore[username];
+                commitStateToLocalStorage();
+                renderAdminWorkspace();
+            }
+        }
+
+        function purgePlatformDatastore() {
+            if (confirm("CRITICAL INSTRUCTION: Execute nuclear cluster reset? All user indices and log metrics will be dropped natively except root admin configuration maps.")) {
+                const adminKeyBackup = platformDatastore[SEED_ADMIN_ID].key;
+                platformDatastore = {};
+                platformDatastore[SEED_ADMIN_ID] = {
+                    key: adminKeyBackup,
+                    role: 'admin',
+                    logs: [],
+                    milestone: { target: 0, current: 0 }
+                };
+                commitStateToLocalStorage();
+                if (authenticatedUser !== SEED_ADMIN_ID) {
+                    logout();
+                } else {
+                    renderAdminWorkspace();
+                }
+            }
+        }
+
+        // Secure DOM Sanitization Helper Utilities
+        function escapeStringHtml(text) {
+            const mappingMatrix = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return String(text).replace(/[&<>"']/g, match => mappingMatrix[match]);
         }
     </script>
 </body>
