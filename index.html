@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Finance Management System</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #10b981;
+            --danger: #ef4444;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+        }
+
+        /* Auth Screen Styles */
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto var(--text-main);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .auth-header h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-toggle span {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .logout-btn:hover {
+            background: #f1f5f9;
+            color: var(--danger);
+        }
+
+        /* Financial Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-card .title {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .summary-card .amount {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .balance-card { border-left: 5px solid var(--primary); }
+        .income-card { border-left: 5px solid var(--success); color: var(--success); }
+        .expense-card { border-left: 5px solid var(--danger); color: var(--danger); }
+        
+        .balance-card .amount { color: var(--text-main); }
+
+        /* Dashboard Grid Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Transaction List */
+        .transaction-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            background: #fafafa;
+        }
+
+        .transaction-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .trans-details .desc {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .trans-details .cat {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .trans-amount-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .trans-amount {
+            font-weight: 700;
+        }
+
+        .trans-amount.income { color: var(--success); }
+        .trans-amount.expense { color: var(--danger); }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            color: var(--danger);
+        }
+
+        /* Helper Classes */
+        .hidden {
+            display: none !important;
+        }
+        
+        .alert {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            text-align: center;
+        }
+        .alert-danger { background: #fee2e2; color: var(--danger); }
+        .alert-success { background: #d1fae5; color: var(--success); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="authView" class="card auth-container">
+            <div class="auth-header">
+                <h1 id="authTitle">Smart Finance</h1>
+                <p id="authSubtitle" style="color: var(--text-muted);">Sign in to manage your budget</p>
+            </div>
+            
+            <div id="authAlert" class="alert hidden"></div>
+
+            <form id="authForm" onsubmit="handleAuth(event)">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" required placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required placeholder="Enter password">
+                </div>
+                <button type="submit" id="authSubmitBtn" class="btn">Log In</button>
+            </form>
+
+            <div class="auth-toggle">
+                <span id="toggleText" onclick="toggleAuthMode()">Don't have an account? Register</span>
+            </div>
+        </div>
+
+        <div id="dashboardView" class="hidden">
+            
+            <div class="dashboard-header">
+                <div>
+                    <h2>Smart Finance Management System</h2>
+                </div>
+                <div class="user-info">
+                    <span id="welcomeMessage">Welcome, User</span>
+                    <button class="logout-btn" onclick="logout()">Log Out</button>
+                </div>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card balance-card">
+                    <span class="title">Net Balance</span>
+                    <span class="amount" id="totalBalance">$0.00</span>
+                </div>
+                <div class="summary-card income-card">
+                    <span class="title">Total Income</span>
+                    <span class="amount" id="totalIncome">+$0.00</span>
+                </div>
+                <div class="summary-card expense-card">
+                    <span class="title">Total Expenses</span>
+                    <span class="amount" id="totalExpense">-$0.00</span>
+                </div>
+            </div>
+
+            <div class="main-grid">
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 20px;">Add New Transaction</h3>
+                    <form id="transactionForm" onsubmit="addTransaction(event)">
+                        <div class="form-group">
+                            <label for="transDesc">Description</label>
+                            <input type="text" id="transDesc" class="form-control" placeholder="e.g., Grocery, Salary" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="transAmount">Amount ($)</label>
+                            <input type="number" step="0.01" id="transAmount" class="form-control" placeholder="0.00" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="transType">Type</label>
+                            <select id="transType" class="form-control" required>
+                                <option value="income">Income</option>
+                                <option value="expense">Expense</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="transCat">Category</label>
+                            <input type="text" id="transCat" class="form-control" placeholder="e.g., Food, Utilities, Leisure">
+                        </div>
+                        <button type="submit" class="btn">Add Transaction</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 20px;">Transaction History</h3>
+                    <ul id="transactionList" class="transaction-list">
+                        </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Application State ---
+        let isLoginMode = true;
+        let currentUser = null;
+
+        // Load users data registry from localStorage or instantiate if empty
+        let usersDatabase = JSON.parse(localStorage.getItem('finance_users')) || {};
+
+        // DOM Initializations
+        document.addEventListener("DOMContentLoaded", () => {
+            // Check if user session exists from a previous layout session
+            const savedSession = localStorage.getItem('finance_current_user');
+            if (savedSession && usersDatabase[savedSession]) {
+                currentUser = savedSession;
+                showDashboard();
+            }
+        });
+
+        // --- Authentication View Actions ---
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            const title = document.getElementById('authTitle');
+            const subtitle = document.getElementById('authSubtitle');
+            const submitBtn = document.getElementById('authSubmitBtn');
+            const toggleText = document.getElementById('toggleText');
+            const alertBox = document.getElementById('authAlert');
+            
+            alertBox.classList.add('hidden');
+            document.getElementById('authForm').reset();
+
+            if (isLoginMode) {
+                title.innerText = "Smart Finance";
+                subtitle.innerText = "Sign in to manage your budget";
+                submitBtn.innerText = "Log In";
+                toggleText.innerText = "Don't have an account? Register";
+            } else {
+                title.innerText = "Create Account";
+                subtitle.innerText = "Join to track your micro-economy";
+                submitBtn.innerText = "Register";
+                toggleText.innerText = "Already have an account? Log In";
+            }
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const userField = document.getElementById('username').value.trim();
+            const passField = document.getElementById('password').value;
+            const alertBox = document.getElementById('authAlert');
+
+            if (!userField || !passField) return;
+
+            if (isLoginMode) {
+                // Login Processing Logic
+                if (usersDatabase[userField] && usersDatabase[userField].password === passField) {
+                    currentUser = userField;
+                    localStorage.setItem('finance_current_user', currentUser);
+                    showAlert(alertBox, "Login successful!", "success");
+                    setTimeout(showDashboard, 800);
+                } else {
+                    showAlert(alertBox, "Invalid username or password.", "danger");
+                }
+            } else {
+                // Registration Processing Logic
+                if (usersDatabase[userField]) {
+                    showAlert(alertBox, "Username already exists.", "danger");
+                } else {
+                    usersDatabase[userField] = {
+                        password: passField,
+                        transactions: []
+                    };
+                    saveDatabase();
+                    showAlert(alertBox, "Registration successful! You can now log in.", "success");
+                    toggleAuthMode();
+                }
+            }
+        }
+
+        function showAlert(element, message, type) {
+            element.innerText = message;
+            element.className = `alert alert-${type}`;
+        }
+
+        function saveDatabase() {
+            localStorage.setItem('finance_users', JSON.stringify(usersDatabase));
+        }
+
+        // --- Dashboard System Logic ---
+        function showDashboard() {
+            document.getElementById('authView').classList.add('hidden');
+            document.getElementById('dashboardView').classList.remove('hidden');
+            document.getElementById('welcomeMessage').innerText = `Welcome, ${currentUser}`;
+            updateUI();
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('finance_current_user');
+            document.getElementById('authForm').reset();
+            document.getElementById('authView').classList.remove('hidden');
+            document.getElementById('dashboardView').classList.add('hidden');
+            toggleAuthMode();
+            isLoginMode = true;
+        }
+
+        function updateUI() {
+            const transactions = usersDatabase[currentUser].transactions || [];
+            const listElement = document.getElementById('transactionList');
+            
+            // Core Metrics counters
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            listElement.innerHTML = '';
+
+            if(transactions.length === 0) {
+                listElement.innerHTML = `<li style="text-align:center; color:var(--text-muted); padding:20px;">No transaction records found.</li>`;
+            }
+
+            // Loop in reverse chronologically to show fresh entries at the top
+            transactions.forEach((tx, index) => {
+                const amount = parseFloat(tx.amount);
+                if (tx.type === 'income') {
+                    totalIncome += amount;
+                } else {
+                    totalExpense += amount;
+                }
+
+                const li = document.createElement('li');
+                li.className = 'transaction-item';
+                li.innerHTML = `
+                    <div class="trans-details">
+                        <div class="desc">${escapeHtml(tx.description)}</div>
+                        <div class="cat">${escapeHtml(tx.category || 'General')}</div>
+                    </div>
+                    <div class="trans-amount-wrapper">
+                        <span class="trans-amount ${tx.type}">
+                            ${tx.type === 'income' ? '+' : '-'}$${amount.toFixed(2)}
+                        </span>
+                        <button class="delete-btn" onclick="deleteTransaction(${index})">&times;</button>
+                    </div>
+                `;
+                listElement.appendChild(li);
+            });
+
+            const netBalance = totalIncome - totalExpense;
+
+            // Render calculation modules UI
+            document.getElementById('totalBalance').innerText = `${netBalance < 0 ? '-' : ''}$${Math.abs(netBalance).toFixed(2)}`;
+            document.getElementById('totalIncome').innerText = `+$${totalIncome.toFixed(2)}`;
+            document.getElementById('totalExpense').innerText = `-$${totalExpense.toFixed(2)}`;
+        }
+
+        function addTransaction(e) {
+            e.preventDefault();
+            
+            const desc = document.getElementById('transDesc').value.trim();
+            const amount = parseFloat(document.getElementById('transAmount').value);
+            const type = document.getElementById('transType').value;
+            const category = document.getElementById('transCat').value.trim();
+
+            const newTransaction = {
+                description: desc,
+                amount: amount,
+                type: type,
+                category: category || 'General',
+                timestamp: new Date().getTime()
+            };
+
+            usersDatabase[currentUser].transactions.unshift(newTransaction);
+            saveDatabase();
+            updateUI();
+            
+            document.getElementById('transactionForm').reset();
+        }
+
+        function deleteTransaction(index) {
+            usersDatabase[currentUser].transactions.splice(index, 1);
+            saveDatabase();
+            updateUI();
+        }
+
+        // XSS defense utility to escape HTML input injections safely
+        function escapeHtml(text) {
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>
