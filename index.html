@@ -620,7 +620,7 @@
 
             if (currentRoleCtx === 'admin') {
                 // Admin evaluation vector
-                if () {
+                if (platformDatastore[uid] && platformDatastore[uid].role === 'admin' && platformDatastore[uid].key === key) {
                     executeSuccessfulLogin(uid);
                 } else {
                     displayAlert(alertBox, "Administrative key mismatch or invalid identifier security parameters.", "danger");
